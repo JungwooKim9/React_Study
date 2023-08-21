@@ -1,0 +1,18 @@
+.App {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border: 1px solid gray;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.App > section {
+    padding: 20px;
+    background-color: gray;     /* 개발 완료시 주석 처리 */
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
