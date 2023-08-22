@@ -18,7 +18,7 @@ const mockDate = [
   },
   {
     id: 1,
-    isDone: false,
+    isDone: true,
     content: "노래 연습하기",
     createDate: new Date().getDate()
   },
@@ -26,9 +26,12 @@ const mockDate = [
     id: 2,
     isDone: false,
     content: "빨래 널기",
-    createDate: new Date().getDate()
+    createDate: new Date().getTime()
   }
 ]
+
+// new Date().getDate() : UNIX 표준시 1970.1.1 (UNIX 처음 나온 때)
+// new Date().getTime() : 현재 시스템의 날짜
 
 function App() {
   // 최상위 컴포넌트: root 컴포넌트
@@ -57,14 +60,41 @@ function App() {
 
   };
   // Todo를 수정하는 함수: onUpdate
+    // 하위 컴포넌트로 받은 인풋 값: targetId
+    // 하위 컴포넌트로부터 객체의 id 값을 부여 받아서 isDone의 값을 수정
+    // it: todo 배열의 객체를 받는 변수
+  const onUpdate = (targetId) => {
+    setTodo (
+      todo.map((it) =>
+        // it.id와 targetId가 같은 값을 찾아서 isDone 필드의 값을 수정
+        // === : 값과 타입이 모두 같을 때
+        it.id === targetId ? {...it, isDone : !it.isDone}: it
+
+      )
+    );
+  };
 
   // Todo를 삭제하는 함수: onDelete
+  // 배열의 값을 filter를 사용 해서 원하는 값만 검색
+  // 배열 내부의 객체화 삭제할 id가 같지 않은 것만 필터링 해서 setTodo를 사용 해서 주입
+  const onDelete = (targetId) => {
+
+    setTodo (todo.filter((it) => 
+        it.id !== targetId
+    ));
+
+  };
+
+  // 하위 컴포넌트가 App 컴포넌트로 이벤트를 전달
+  // 하위 컴포넌트 호출시 pros를 사용해서 이벤트 전달
+  // TodoEditor: onCreate
+  // TodoList => : TodoItem: onUpdate, onDelete
 
   return (
     <div className="App">
       <Header />
-      <TodoEdittor />
-      <TodoList />
+      <TodoEdittor onCreate={onCreate} />
+      <TodoList todo={todo} onUpdate={onUpdate} onDelete={onDelete} />
     </div>
   );
 }
