@@ -14,6 +14,6 @@ const TodoTemplateBlock = styled.div`
  flex-direction: column;
 `;
 function TodoTemplate({ children }) {
-return <TodoTemplateBlock>{children}</TodoTemplateBlock>;
+    return <TodoTemplateBlock>{children}</TodoTemplateBlock>;
 }
 export default TodoTemplate;
